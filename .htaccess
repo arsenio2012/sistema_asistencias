@@ -1,0 +1,6 @@
+#Nuestro control de rutas
+Options +FollowSymLinks
+RewriteEngine on
+
+#Rutas de usuario
+RewriteRule ^home$ index.php?section=home [QSA]
