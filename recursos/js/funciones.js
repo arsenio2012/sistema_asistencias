@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 $(document).ready(function(){
 	// Direccion del servidor
 	let root = "http://192.168.1.8/github/sistema_asistencias/";
@@ -35,6 +36,40 @@ $(document).ready(function(){
 			error: function(){
 				alert("Ops, ha ocurrido un error de sistema");
 			} 
+=======
+// Una vez cargado el documento HTML ejecutamos nuestras funciones
+$(document).ready(function(){
+	// Definimos nuestra ruta de servidor
+	let root = "http://192.168.1.8/github/sistema_asistencias/";
+
+	/* Nuestras funciones de logeo */
+
+	// Mostrar ventana donde se logeará
+	$(".abrir_modal").on("click", function(){
+		$('.ui.modal').modal('show');
+	});
+
+	// Login
+	$("#formLogin").submit(function(e){
+		e.preventDefault();
+		
+		let form = $(this),
+			boton = $(".botonFormlogeo");
+
+		$.ajax({
+			type: "POST",
+			url: root + "recursos/funciones/acciones_de_admin/login.php",
+			data: form.serialize(),
+
+			success: function(data){
+				console.log(data);
+				if(data == "true"){
+					alert("logeando");
+				}else if(data == "false"){
+					alert("hay datos mal");
+				}
+			}
+>>>>>>> main
 		});
 	});
 
@@ -45,11 +80,19 @@ $(document).ready(function(){
 
 		// Algunas variables que necesitaremos
 		let form = $(this),
+<<<<<<< HEAD
 			boton = $(".botonAsistencia");
 
 		$.ajax({
 			type: "POST",
 			url: root + "recursos/php/acciones_de_usuario/asistencia_del_dia.php",
+=======
+			boton = $(".botonForm");
+
+		$.ajax({
+			type: "POST",
+			url: root + "recursos/funciones/acciones_de_usuario/asistencia_del_dia.php",
+>>>>>>> main
 			data: form.serialize(),
 
 			beforeSend: function(){
@@ -63,7 +106,10 @@ $(document).ready(function(){
 					setTimeout(function(){
 						//$('.ui.small.modal').modal('onApprove');
 						//window.location.reload();
+<<<<<<< HEAD
 						form[0].reset();
+=======
+>>>>>>> main
 						alert("Bienvenido");
 					}, 600);
 				}else {
@@ -72,11 +118,16 @@ $(document).ready(function(){
 			},
 			error: function(){
 				boton.removeClass("loading");
+<<<<<<< HEAD
 				alert("Error: error de sistema");
+=======
+				alert("Error: 500");
+>>>>>>> main
 			}
 		});
 	});
 
+<<<<<<< HEAD
 	/*
 		Modales
 	*/
@@ -293,3 +344,18 @@ $(document).ready(function(){
 		});
 	});
 });
+=======
+	// Notificacion de bienvenida
+	// code
+
+	/* Funcion del administrador */
+	// Registrar usuarios
+	// CODE
+
+	// Editar usuario
+	// CODE 
+
+	// eliminar usuario
+	// CODE
+});
+>>>>>>> main

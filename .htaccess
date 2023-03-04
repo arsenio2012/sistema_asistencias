@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Nuestras rutas
 Options +FollowSymLinks
 RewriteEngine On
@@ -17,3 +18,11 @@ RewriteRule ^asistencias$ panel/index.php?section=asistencias [QSA]
 
 # Cerrar la sesión
 RewriteRule ^logout$ recursos/php/admin_acciones/logout.php [QSA]
+=======
+#Nuestro control de rutas
+Options +FollowSymLinks
+RewriteEngine on
+
+#Rutas de usuario
+RewriteRule ^home$ index.php?section=home [QSA]
+>>>>>>> main
