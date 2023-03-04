@@ -1,0 +1,19 @@
+# Nuestras rutas
+Options +FollowSymLinks
+RewriteEngine On
+
+# Rutas de usuario
+RewriteRule ^home$ index.php?section=home [QSA]
+RewriteRule ^login$ index.php?section=login [QSA]
+
+# Rutas de admin
+RewriteRule ^panel_administrador$ panel/index.php?section=panel_administrador [QSA]
+RewriteRule ^administradores$ panel/index.php?section=administradores [QSA]
+RewriteRule ^secretarios$ panel/index.php?section=secretarios [QSA]
+RewriteRule ^docentes$ panel/index.php?section=docentes [QSA]
+RewriteRule ^suplentes$ panel/index.php?section=suplentes [QSA]
+RewriteRule ^registrar_usuarios$ panel/index.php?section=registrar_usuarios [QSA]
+RewriteRule ^asistencias$ panel/index.php?section=asistencias [QSA]
+
+# Cerrar la sesión
+RewriteRule ^logout$ recursos/php/admin_acciones/logout.php [QSA]
