@@ -2,11 +2,7 @@
 Sistema de asistencia de docentes para un proyecto en la fria
 
 ## Version 1.0
-<<<<<<< HEAD
 - Empezamos la version 1.0 de sistema_asistencias
-=======
-- Empezamos la version 1.0 de sistema_asistencias 
->>>>>>> main
 - Se realizó las funciones de asistencias
 - Formulario de asistencia funcionando
 - Falta mejorar el mensaje de bienvenido (pienso en un modal)
@@ -27,7 +23,4 @@ Sistema de asistencia de docentes para un proyecto en la fria
 - Tablas de usuarios
 - Tabla de asistencias
 - Implementacio de datatable para hacer de las tablas atractivas
-=======
-- Primer push 
-
->>>>>>> main
+- Correcion del bug que dejó el merge..

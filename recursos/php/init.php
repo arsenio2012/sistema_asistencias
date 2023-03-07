@@ -9,7 +9,7 @@
 	setlocale(LC_ALL, "es_ES");
 
 	// Definimos servidor
-	$server = "http://192.168.1.8/github/sistema_asistencias/";
+	$server = "http://192.168.1.9/github/sistema_asistencias/";
 
 	// Defenimos el nombre y la version del sistema
 	$titulo = "Sistema de asistencias";
