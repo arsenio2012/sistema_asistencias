@@ -44,11 +44,11 @@
          <input type="text" placeholder="Ingrese su apellido" value="<?php echo $apellidos; ?>" name="apellidos">
         </div>
         <div class="field">
-         <label for="Cedula">Cedula</label>
+         <label for="Cedula">Cédula</label>
          <input type="text" placeholder="Ingrese su apellido" value="<?php echo $cedula; ?>" name="cedula">
         </div>
         <div class="field">
-         <label for="apellidos">usuario</label>
+         <label for="apellidos">Usuario</label>
          <input type="text" placeholder="Ingrese su usuario" value="<?php echo $usuario; ?>" name="usuario">
         </div>
          <div class="field">

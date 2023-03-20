@@ -5,7 +5,7 @@
       <tr>
         <th></th>
         <th>Nombres y apellidos</th>
-        <th>E-mail</th>
+        <th>Correo electrónico</th>
         <th>Registrado</th>
         <!--<th>Opciones</th>-->
       </tr>
@@ -37,6 +37,8 @@
         <tr>
           <td></td>
           <td>No hay usuarios registrados</td>
+          <td></td>
+          <td></td>
         </tr>
       <?php endif ?>
     </tbody>

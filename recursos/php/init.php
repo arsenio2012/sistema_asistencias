@@ -13,7 +13,7 @@
 
 	// Defenimos el nombre y la version del sistema
 	$titulo = "Sistema de asistencias";
-	$version = "1.1";
+	$version = "1.3";
 
 	// Conexion a la base de datos
 	use Medoo\Medoo;

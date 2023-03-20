@@ -9,10 +9,10 @@
     Inicio
   </a>
   <a class="item ver_mision">
-    Mision
+    Misión
   </a>
   <a class="item ver_vision">
-    Vision
+    Visíón
   </a>
   <div class="right menu">
     <!--<div class="item">

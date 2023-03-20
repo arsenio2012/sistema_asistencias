@@ -76,7 +76,7 @@
 		}
 
 		// Registrar usuario
-		public function registrar_usuario($nombres, $apellidos, $ci, $telf, $rol, $email){
+		public function registrar_usuario($nombres, $apellidos, $ci, $telf, $rol, $email, $inicio_ministerio){
 			global $database;
 
 			if($this->antiDatosDoble($ci, $username) == 0){
@@ -88,7 +88,8 @@
 					"password" => password_hash($ci, PASSWORD_BCRYPT),
 					"id_rol" => $rol,
 					"correo" => $email,
-					"created_at" => date("Y-m-d")
+					"created_at" => date("Y-m-d"),
+					"fecha_inicio_ministerio" => $inicio_ministerio
 				]);
 				return $database->id();
 			}else{
@@ -103,9 +104,24 @@
 				"password" => password_hash($ci, PASSWORD_BCRYPT),
 				"id_rol" => $rol,
 				"correo" => $email,
-				"created_at" => date("Y-m-d")
+				"created_at" => date("Y-m-d"),
+				"fecha_inicio_ministerio" => $inicio_ministerio
 			]);
 			return $database->id();
+		}
+
+		// Funcion para ver la exitencia del usuario
+		public function asistencia_del_dia($ci){
+			global $database;
+			$asistencia_hoy = $database->select("asistencias", "ci", [
+			    "AND" => [
+			        "ci" => $ci,
+			        "date[>=]" => date("Y-m-d 00:00:00"), // Hoy a las 00:00:00
+			        "date[<=]" => date("Y-m-d 23:59:59"), // Hoy a las 23:59:59
+			    ]
+			]);
+
+			return $asistencia_hoy;
 		}
 
 		// Funcion de asistencia
@@ -152,11 +168,43 @@
 				"users.id_rol",
 				"users.correo",
 				"users.created_at",
+				"users.fecha_inicio_ministerio",
 				"roles.descripcion"
 			],[
 				"id_user" => $id_user
 			]);
 			return $usuarios;
+		}
+
+		function calcular_dias($fecha_ingreso){
+			// Convertimos la fecha de ingreso a un objeto DataTime
+			$fecha1 = new DateTime($fecha_ingreso);
+
+			// Obtenemos la fecha actual
+			$fecha2 = new DateTime();
+
+			// Calculamos la distancia entre las dos fechas
+			$intervalo = $fecha1->diff($fecha2);
+
+			// Obtenemos los años, meses y días trasncurridos
+		    $anios = $intervalo->y;
+		    $meses = $intervalo->m;
+		    $dias = $intervalo->d;
+
+		    // Construimos la cadena de resultado
+		    $resultado = '';
+		    if ($anios > 0) {
+		        $resultado .= $anios . ' año(s) ';
+		    }
+		    if ($meses > 0) {
+		        $resultado .= $meses . ' mes(es) y ';
+		    }
+		    if ($dias > 0) {
+		        $resultado .= $dias . ' día(s)';
+		    }
+
+			// Retornamos el resultado
+    		return $resultado;
 		}
 
 		public function eliminar_usuario($id_user){

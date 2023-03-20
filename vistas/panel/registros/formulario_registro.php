@@ -24,19 +24,24 @@
 	    </div>
 	  </div>
 	  <div class="field">
-	    <label>Correo electronico</label>
+	    <label>Correo electrónico</label>
 	      <div class="wide field">
 	        <input type="email" name="email" placeholder="E-mail">
 	      </div>
 	  </div>
-	   <h4 class="ui dividing header">Datos</h4>
+	  <h4 class="ui dividing header datos">Datos</h4>
 	  <div class="field">
 	  	<div class="two fields">
 	  		<div class="field"><input type="text" name="cedula" id="cedulaFormularioRegistro" placeholder="numero de cedula"></div>
 	  		<div class="field"><input type="text" name="telefono" placeholder="numero de telefono"></div>
 	  	</div>
 	  </div>
-	  <div class="resultado"></div>
+	   <div class="field">
+	    <label>Indique la fecha de inicio en el ministerio de educación</label>
+	      <div class="wide field">
+	        <input type="date" name="inicio_ministerio" placeholder="E-mail">
+	      </div>
+	  </div>
 	   <div class="ui segment">
 	    <div class="field">
 	        <div class="ui form">

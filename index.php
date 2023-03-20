@@ -4,11 +4,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Sistema de asistencias</title>
+	<title><?php echo $titulo." ".$version; ?></title>
 	<!-- Nuestros estilos -->
 	<link rel="stylesheet" href="<?php echo $server; ?>recursos/css/semantic.min.css">
 	<link rel="stylesheet" href="<?php echo $server; ?>recursos/css/estilos.css">
-	<title>Sistema asistencias <?php echo $version; ?></title>
+	<link rel="icon" href="<?php echo $server; ?>recursos/imagenes/instituto.png">
 </head>
 <body>
 	<?php  

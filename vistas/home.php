@@ -1,1 +1,0 @@
-<?php require 'vistas/asistencia.php'; ?>

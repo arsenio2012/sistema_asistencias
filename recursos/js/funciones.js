@@ -2,6 +2,30 @@ $(document).ready(function(){
 	// Direccion del servidor
 	let root = "http://192.168.1.9/github/sistema_asistencias/";
 
+	// Funcion de notificaciones
+	function notificacion(mensaje, tipo){
+		let notificacion;
+		let mensaje_notificacion = $("<p>").text(mensaje);
+		let icon = $("<i>").addClass("close icon");
+
+		if(tipo == "success"){
+			notificacion = $("<div>").addClass("ui success message");
+		}else if(tipo == "info"){
+			notificacion = $("<div>").addClass("ui info message");
+		}else if(tipo == "warning"){
+			notificacion = $("<div>").addClass("ui warning message");
+		}else if(tipo == "error"){
+			notificacion = $("<div>").addClass("ui error message");
+		}
+
+		notificacion.append(mensaje_notificacion);
+		notificacion.append(icon);
+
+		return notificacion;
+	}
+
+	let notificar;
+
 	// Funcion de login
 	$("#formLogin").submit(function(e){
 		e.preventDefault();
@@ -58,21 +82,66 @@ $(document).ready(function(){
 			success: function(data){
 				console.log(data)
 				boton.removeClass("loading");
-				if(data > 0){
-					$('.ui.small.modal').modal('show');
-					setTimeout(function(){
-						//$('.ui.small.modal').modal('onApprove');
-						//window.location.reload();
-						form[0].reset();
-						alert("Bienvenido");
-					}, 600);
-				}else {
-					alert("No se ha podido firmar la asistencia");
+				switch(data){
+					case 'firmado':
+						notificar = notificacion("Bienvenido", "success");
+						$("body").append(notificar);
+						setTimeout(function(){
+							//window.location.reload();
+							form[0].reset();
+							notificar.remove();
+						}, 2000);
+					break;
+
+					case 'error_inesperado':
+						notificar = notificacion("Ops, ha ocurrido un error inesperado. Por favor intente más tarde.", "error");
+						$("body").append(notificar);
+						setTimeout(function(){
+							//window.location.reload();
+							form[0].reset();
+							notificar.remove();
+						}, 3500);
+					break;
+
+					case 'ya_firmo':
+						notificar = notificacion("Error: El usuario ya ha firmado la sistencia del día de hoy", "error");
+						$("body").append(notificar);
+						setTimeout(function(){
+							//window.location.reload();
+							form[0].reset();
+							notificar.remove();
+						}, 3500);
+					break;
+
+					case 'cedula_no_existe':
+						notificar = notificacion("Error: La cédula ingresada no se encontró en la base de datos, verifica e intente nuevamente.", "error");
+						$("body").append(notificar);
+						setTimeout(function(){
+							//window.location.reload();
+							//form[0].reset();
+							notificar.remove();
+						}, 3500);
+					break;
+
+					case 'campo_vacio':
+						notificar = notificacion("Error: No ha ingresado la cédula.", "error");
+						$("body").append(notificar);
+						setTimeout(function(){
+							//window.location.reload();
+							//form[0].reset();
+							notificar.remove();
+						}, 1200);
+					break;
 				}
 			},
 			error: function(){
 				boton.removeClass("loading");
-				alert("Error: error de sistema");
+				//alert("Error: error de sistema");
+				notificar = notificacion("Error: error de sistema", "error");
+				$("body").append(notificar);
+				setTimeout(function(){
+					notificar.remove();
+				},2000);
 			}
 		});
 	});
@@ -119,36 +188,169 @@ $(document).ready(function(){
 			success: function(data){
 				console.log(data);
 				boton.removeClass("loading");
-				if (data > 0) {
-					form.addClass("success");
-					document.querySelector(".resultado").innerHTML = data;
-					form[0].reset();
-				}else{
-					document.querySelector(".resultado").innerHTML = data;
-					form.addClass("error");
-				}	
+				switch(data){
+					case 'user_registrado':
+						form.addClass("success");
+						notificar = notificacion("Se ha registrado el usuario correctamente", "success");
+						setTimeout(function(){
+							boton.removeClass("loading");
+						}, 200);
+						setTimeout(function(){
+							form.append(notificar);
+						}, 500);
+						setTimeout(function(){
+							form[0].reset();
+							notificar.remove();
+						}, 2000);
+					break;
+
+					case 'error_registro':
+						form.addClass("error");
+						notificar = notificacion("Ops, hubo un error al crear al usuario", "error");
+						setTimeout(function(){
+							boton.removeClass("loading");
+						}, 200);
+						setTimeout(function(){
+							form.append(notificar);
+						}, 500);
+						setTimeout(function(){
+							//window.location.reload();
+							notificar.remove();
+						}, 2000);
+					break;
+
+					case 'Falta_campo_nombres':
+						form.addClass("error");
+						notificar = notificacion("El campo de los nombres está vacio", "error");
+						setTimeout(function(){
+							boton.removeClass("loading");
+						}, 200);
+						setTimeout(function(){
+							form.append(notificar);
+						}, 500);
+						setTimeout(function(){
+							//window.location.reload();
+							notificar.remove();
+						}, 2000);
+					break;
+
+					case 'Falta_campo_apellidos':
+						form.addClass("error");
+						notificar = notificacion("El campo de los apellidos está vacío", "error");
+						setTimeout(function(){
+							boton.removeClass("loading");
+						}, 200);
+						setTimeout(function(){
+							form.append(notificar);
+						}, 500);
+						setTimeout(function(){
+							//window.location.reload();
+							notificar.remove();
+						}, 2000);
+					break;
+
+					case 'Falta_campo_email':
+						form.addClass("error");
+						notificar = notificacion("El campo del correo electrónico está vacío", "error");
+						setTimeout(function(){
+							boton.removeClass("loading");
+						}, 200);
+						setTimeout(function(){
+							form.append(notificar);
+						}, 500);
+						setTimeout(function(){
+							//window.location.reload();
+							notificar.remove();
+						}, 2000);
+					break;
+
+					case 'Falta_campo_cedula':
+						form.addClass("error");
+						notificar = notificacion("El campo de la cédula está vacío", "error");
+						setTimeout(function(){
+							boton.removeClass("loading");
+						}, 200);
+						setTimeout(function(){
+							form.append(notificar);
+						}, 500);
+						setTimeout(function(){
+							//window.location.reload();
+							notificar.remove();
+						}, 2000);
+					break;
+
+					case 'Falta_campo_telefono':
+						form.addClass("error");
+						notificar = notificacion("El campo del teléfono está vacío", "error");
+						setTimeout(function(){
+							boton.removeClass("loading");
+						}, 200);
+						setTimeout(function(){
+							form.append(notificar);
+						}, 500);
+						setTimeout(function(){
+							//window.location.reload();
+							notificar.remove();
+						}, 2000);
+					break;
+
+					case 'Falta_campo_rol':
+						form.addClass("error");
+						notificar = notificacion("No ha asignado un rol", "error");
+						setTimeout(function(){
+							boton.removeClass("loading");
+						}, 200);
+						setTimeout(function(){
+							form.append(notificar);
+						}, 500);
+						setTimeout(function(){
+							//window.location.reload();
+							notificar.remove();
+						}, 2000);
+					break;
+
+				case 'Falta_campo_inicio_ministerio':
+						form.addClass("error");
+						notificar = notificacion("No ha indicado la fecha de inicio en el ministerio del usuario", "error");
+						setTimeout(function(){
+							boton.removeClass("loading");
+						}, 200);
+						setTimeout(function(){
+							form.append(notificar);
+						}, 500);
+						setTimeout(function(){
+							//window.location.reload();
+							notificar.remove();
+						}, 2000);
+					break;
+				}
 			},
 			error: function(){
-				console.log("Error: 500");
-				form[0].reset();
+				form.addClass("error");
+				notificar = notificacion("Error! Hubo un error del sistema, por favor intente más tarde o contacta a soporte", "error");
+				setTimeout(function(){
+					boton.removeClass("loading");
+				}, 200);
+				setTimeout(function(){
+					form.append(notificar);
+				}, 500);
+				setTimeout(function(){
+					//window.location.reload();
+					//form[0].reset();
+					notificar.remove();
+				}, 4000);
+				
 			}
 		});
 	});
 
-	/*
-		Notificaciones
-	*/
-
 	// Para mostrar la notificacion de que la cedula será la contraseña inicial de los usuarios registrados 
 	$('#cedulaFormularioRegistro').on("click", function(){
-		$("#registrar_usuario").addClass("warning");
-		$.ajax({
-			url: root + "vistas/notificaciones/warning/cedula_default.php",
-
-			success: function(data){
-				document.querySelector(".resultado").innerHTML = data;
-			}
-		});
+		notificar = notificacion("Información: La contraseña será la cédula del usuario.", "info")
+		$(".datos").append(notificar);
+		setTimeout(function(){
+			notificar.remove();
+		},3500);
 	});
 
 	// Para mostrar el campo de la ingresar username en caso de ser secretario o admin y tendran acceso al sistema
@@ -167,6 +369,19 @@ $(document).ready(function(){
 	*/
 	$("#tabla_users").DataTable();
 
+	var table = $('#tabla_users').DataTable();
+
+	$('#filtro_mes').on('change', function() {
+	    // Obtener el valor del input de mes
+	    var mes = $('#filtro_mes').val();
+
+	    // Obtener el mes y el año seleccionados
+	    var fecha = moment(mes + "-01").format('YYYY-MM');
+
+	    // Buscar en la columna correspondiente de la tabla
+	    table.column(4).search(fecha).draw();
+	});
+
 	// Para seleccionar todo con el checkbox
 	$("#seleccionar_todo").on("change", function(){
 	  	$(".checkbox_ci").prop("checked", this.checked);
@@ -182,7 +397,7 @@ $(document).ready(function(){
 
 		if(seleccionados.length > 1){
 	  		$("#ver_usuario, #editar_usuario, .or").hide();
-			console.log("Mas de un usuario seleccionado, no se pueden ver o editar");
+			//console.log("Más de un usuario seleccionado, no se pueden ver o editar");
 	  	}else{
 	  		$("#ver_usuario, #editar_usuario, .or").show();
 	  	}
@@ -202,7 +417,7 @@ $(document).ready(function(){
 
 	  	if(seleccionados.length > 1){
 	  		$("#ver_usuario, #editar_usuario, .or").hide();
-			console.log("Mas de un usuario seleccionado, no se pueden ver o editar");
+			//console.log("Más de un usuario seleccionado, no se pueden ver o editar");
 	  	}else{
 	  		$("#ver_usuario, #editar_usuario, .or").show();
 	  	}
@@ -233,7 +448,7 @@ $(document).ready(function(){
 			      		boton.removeClass("loading");
 			      		let modalName = botonId + "_modal"
 
-			      		console.log("abriendo modal ya quiero dormir(" + modalName);
+			      		//console.log("abriendo modal ya quiero dormir(" + modalName);
 
 			      		// Eliminamos cualquier modal previo con la misma clase
 					    $("." + modalName).remove();
@@ -254,10 +469,22 @@ $(document).ready(function(){
 			      				}, 
 
 			      				success: function(data){
-			      					window.location.reload(); // Reinciamos la pagina
+			      					notificar = notificacion("Se ha eliminado el/los usuario/s correctamente.", "success")
+									$(".twelve.wide.column").append(notificar);
+									setTimeout(function(){
+										notificar.remove();
+									},2500);
+									setTimeout(function(){
+										window.location.reload(); // Reinciamos la pagina
+									},2800);
 			      				},
 			      				error: function(jqXHR, textStatus, errorThrown){
-			      					alert("currió un error al eliminar el/los usuarios " + errorThrown);
+			      					//console.log("Ocurrió un error al eliminar el/los usuarios " + errorThrown);
+			      					notificar = notificacion("Ocurrió un error del sistema al eliminar el/los usuarios", "error")
+									$(".twelve.wide.column").append(notificar);
+									setTimeout(function(){
+										notificar.remove();
+									},3500);
 			      				}
 			      			});
 			      		});
@@ -267,7 +494,14 @@ $(document).ready(function(){
 	  	});
 
 	  	//console.log(seleccionados);
-	  	if(!seleccionados_users) console.log("No ha seleccionado usuarios");
+	  	if(!seleccionados_users){
+	  		//console.log("No ha seleccionado usuarios");
+	  		notificar = notificacion("No ha seleccionado usuarios", "info")
+			$(".twelve.wide.column").append(notificar);
+			setTimeout(function(){
+				notificar.remove();
+			},3500);
+	  	} 
 	});	
 
 	// le decimos que escuche el submit del formulario editar usuario que fue agregado dinamicamente al dom
@@ -284,17 +518,26 @@ $(document).ready(function(){
 			success: function(data){
 				console.log(data);
 				if(data > 0){
-					window.location.reload(); // Reinciamos la pagina
-					console.log("Se ha editado el usuario correctamente");
+					notificar = notificacion("Se ha editado el usuario correctamente.", "success")
+					$(".twelve.wide.column").append(notificar);
+					setTimeout(function(){
+						notificar.remove();
+					},2500);
+					setTimeout(function(){
+						window.location.reload(); // Reinciamos la pagina
+					},2800);
+					//console.log("Se ha editado el usuario correctamente");
 				}else{
+					notificar = notificacion("Ha ocurrido un error al editar el usuario, intenta de nuevo", "error")
+					$(".twelve.wide.column").append(notificar);
+					setTimeout(function(){
+						notificar.remove();
+					},3500);
 					alert("Ha ocurrido un error al editar el usuario, intenta de nuevo");
 				}
 			}
 		});
 	});
-
-	// Slider
-	// Code
 
 	// Para quitar las notificaciones 
 	$('.message .close').on('click', function() {
@@ -302,5 +545,31 @@ $(document).ready(function(){
 	      .closest('.message')
 	      .transition('fade')
 	    ;
+	});
+
+	// Funcion para imprimir asistencias
+	$('.imprimir_asistencias').click(function(){
+		// Crea una nueva ventana con solo la tabla que deseas imprimir
+	 	var ventanaImpresion = window.open('', 'PRINT', 'height=800,width=1200');
+
+		// Agrega la tabla a la nueva ventana
+		ventanaImpresion.document.write('<html><head><title>Tabla de asistencias</title>');
+		ventanaImpresion.document.write('<style>');
+		ventanaImpresion.document.write('body { font-family: Arial, sans-serif; }');
+		ventanaImpresion.document.write('table { border-collapse: collapse; width: 100%; }');
+		ventanaImpresion.document.write('th, td { text-align: center; padding: 8px; border-bottom: 1px solid #ddd; }');
+		ventanaImpresion.document.write('th { background-color: #f2f2f2; }');
+		ventanaImpresion.document.write('input[type="checkbox"]{display:none;}.imprimir_asistencias{display:none;}.seleccion{display:none;}');
+		ventanaImpresion.document.write('</style>');
+		ventanaImpresion.document.write('</head><body>');
+		ventanaImpresion.document.write(document.getElementById('tabla_users').outerHTML);
+		ventanaImpresion.document.write('</body></html>');
+		// Llama a la función de impresión de la ventana
+		ventanaImpresion.print();
+
+		// Cierra la ventana después de la impresión
+	    ventanaImpresion.close();
+
+		//window.print();
 	});
 });

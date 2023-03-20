@@ -9,7 +9,7 @@
   </div>
   <div class="actions">
     <button class="ui positive right labeled icon button botonLogin">
-      Login
+      Iniciar sesión
       <i class="checkmark icon"></i>
     </button>
     <div class="ui red deny button">
