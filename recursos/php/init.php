@@ -9,11 +9,11 @@
 	setlocale(LC_ALL, "es_ES");
 
 	// Definimos servidor
-	$server = "http://192.168.1.9/github/sistema_asistencias/";
+	$server = "http://localhost/sistema_asistencias/";
 
 	// Defenimos el nombre y la version del sistema
 	$titulo = "Sistema de asistencias";
-	$version = "1.3";
+	$version = "1.5";
 
 	// Conexion a la base de datos
 	use Medoo\Medoo;

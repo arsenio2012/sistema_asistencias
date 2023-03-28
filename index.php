@@ -19,7 +19,7 @@
 		require 'recursos/php/secciones.php';
 
 		// Footer
-		//require 'vistas/footer.php';
+		require 'vistas/footer.php';
 	?>
 	<!-- Nuestros scripts -->
 	<script src="<?php echo $server;?>recursos/js/JQuery-v3-6-0.js"></script>

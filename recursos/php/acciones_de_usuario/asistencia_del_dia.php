@@ -4,6 +4,7 @@
 
 	if(!empty($_POST['cedula'])){
 		$ci = $_POST['cedula'];
+		
 		// Verificamos que el usuario o la cedula existe
 		$usuario = $obj->verExistenciaUsuarioCedula($ci);
 		if($usuario){
@@ -11,7 +12,7 @@
 			$asiste_dia = $obj->asistencia_del_dia($ci);
 			if(!$asiste_dia){
 				// Ahora sí, firmamos la asistencia
-				$asistencia = $obj->asistencia_user($ci);
+				$asistencia = $obj->asistencia_user($ci, "1", "");
 				if($asistencia){
 					$mensaje = "firmado";
 				}else{

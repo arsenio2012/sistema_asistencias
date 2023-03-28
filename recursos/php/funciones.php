@@ -26,6 +26,28 @@
 			}
 		}
 		
+		// Funcion para ver datos del usuario por username
+		public function ver_usuarioByUsername($username){
+			global $database; 
+
+			$usuarios = $database->select("users",[
+				"[>]roles" => ["id_rol" => "id_rol"]
+			], [
+				"users.id_user",
+				"users.ci",
+				"users.nombres",
+				"users.apellidos",
+				"users.username",
+				"users.id_rol",
+				"users.correo",
+				"users.created_at",
+				"users.fecha_inicio_ministerio",
+				"roles.descripcion"
+			],[
+				"username" => $username
+			]);
+			return $usuarios;
+		}
 		// Funcion para ver si un usuario existe mediante el username
 		public function verExistenciaUsuario($username){
 			global $database;
@@ -125,12 +147,15 @@
 		}
 
 		// Funcion de asistencia
-		public function asistencia_user($ci){
+		public function asistencia_user($ci, $status, $observacion){
 			global $database;
 
 			$asitencia = $database->insert("asistencias",[
 				"ci" => $ci,
-				"date" => date("Y-m-d:H:s:i")
+				"date" => date("Y-m-d:H:s:i"),
+				"id_status" => $status,
+				"observacion" => $observacion
+				
 			]);
 			return $database->id();
 		}
@@ -207,11 +232,11 @@
     		return $resultado;
 		}
 
-		public function eliminar_usuario($id_user){
+		public function eliminar_dato($tabla, $id_user, $donde){
 			global $database;
 
-			$eliminar = $database->delete("users",[
-				"id_user" => $id_user
+			$eliminar = $database->delete($tabla,[
+				$donde => $id_user
 			]);
 			return $eliminar->rowCount;
 		}
@@ -222,16 +247,21 @@
 
 			$asistencias = $database->select("asistencias",[
 				"[>]users" => ["ci" => "ci"],
-				"[>]roles" => ["users.id_rol" => "id_rol"]
+				"[>]roles" => ["users.id_rol" => "id_rol"],
+				"[>]status_asistencia" => ["asistencias.id_status" => "id_status"]
 			], [
+				"asistencias.id_asistencia",
 				"asistencias.ci",
 				"asistencias.date",
-				"asistencias.fecha",
-				"asistencias.hora",
+				"asistencias.id_status",
+				"asistencias.observacion",
 				"users.nombres",
 				"users.apellidos",
 				"users.id_rol",
-				"roles.descripcion"
+				"roles.descripcion",
+				"status_asistencia.description"
+			],[
+				"ORDER" => ["id_asistencia" => "DESC"]
 			]);
 
 			return $asistencias;
@@ -263,6 +293,90 @@
 			]);
 
 			return $editar->rowCount();
+		}
+
+		// Funcion para dar una clase a status
+		function status($id_status){
+			// Definimos el status
+			if($id_status == 1){
+				$status = "positive";
+			}elseif ($id_status == 2) {
+				$status = "negative";
+			}elseif ($id_status == 3) {
+				$status = "warning";
+			}
+
+			return $status;
+		}
+
+		// Funcion para contar asistencias
+		public function contar_asistencias($id_status){
+			global $database;
+
+			$count = $database->count("asistencias", [
+				"id_status" => $id_status
+			]);
+			return $count;
+		}
+
+		// Funcion para ver datos de las asistencia
+		public function ver_asistencia($id){
+			global $database; 
+
+			$asistencia_usuarios = $database->select("asistencias",[
+				"[>]users" => ["ci" => "ci"],
+				"[>]status_asistencia" => ["id_status" => "id_status"]
+			], [
+				"asistencias.ci",
+				"asistencias.id_status",
+				"asistencias.observacion",
+				"status_asistencia.description",
+				"users.nombres",
+				"users.apellidos",
+				"users.username"
+			],[
+				"id_asistencia" => $id
+			]);
+			return $asistencia_usuarios;
+		}
+
+		// Traemos todos los estados de asistencia
+		public function status_asistencia(){
+			global $database;
+
+			$roles = $database->select("status_asistencia",[
+				"id_status",
+				"description"
+			]);
+
+			return $roles;
+		}
+
+		// Editar asistencia
+		public function editar_asistencia($id_user, $observacion, $status){
+			global $database;
+
+			$editar = $database->update("asistencias",[
+				"observacion" => $observacion,
+				"id_status" => $status
+			],[
+				"id_asistencia" => $id_user
+			]);
+
+			return $editar->rowCount();
+		}
+
+		// Editar contraseña
+		public function update_pw($id_user, $pw){
+			global $database;
+
+			$update_pw = $database->update("users", [
+				"password" => password_hash($pw, PASSWORD_BCRYPT)
+			],[
+				"id_user" => $id_user
+			]);
+
+			return $update_pw->rowCount();
 		}
 	}
 ?>

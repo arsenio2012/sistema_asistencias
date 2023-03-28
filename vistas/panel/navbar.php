@@ -2,11 +2,11 @@
   <div class="item ">
     <div class="ui header block aligned center">
        <img src="recursos/imagenes/avatar.png" class="ui small circular image" alt="avatar">
-        <h5 class="ui header"><?php echo $_SESSION['usuario']; ?>
-          <div class="sub header">Administrador</div>
+        <h5 class="ui header"><?php echo $nombres." ".$apellidos; ?>
+          <div class="sub header"><?php echo $rol; ?></div>
         </h5>
     </div>
-  </div>;
+  </div>
   <div class="item">
     <div class="header">Opciones de usuario</div>
     <div class="menu">
@@ -21,17 +21,19 @@
     <div class="header">Asistencias</div>
     <div class="menu">
       <a href="asistencias" class="item <?php $obj->seccion_activa('asistencias'); ?>">Ver asistencias</a>
+      <a href="registrar_asistencia" class="item <?php $obj->seccion_activa('registrar_asistencia'); ?>">Registrar asistencia</a>
     </div>
   </div>
   <div class="item">
     <div class="header">Soporte</div>
     <div class="menu">
-      <a href="#" class="item">Manual de usuario</a>
+      <a href="manual_usuario" class="item">Manual de usuario</a>
     </div>
   </div>
   <div class="item">
     <div class="header">Opciones</div>
     <div class="menu">
+      <a href="cambiar_pw" class="item">Cambiar contraseña</a>
       <a href="logout" class="item">Salir</a>
     </div>
   </div>

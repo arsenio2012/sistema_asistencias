@@ -8,6 +8,6 @@
   //echo "<pre>",print_r($id_usuarios),"</pre>";
 
   foreach ($id_usuarios as $id_usuario) {
-    $usuario_eliminado = $obj->eliminar_usuario($id_usuario);
+    $usuario_eliminado = $obj->eliminar_dato("users", $id_usuario, "id_user");
   }
 ?>

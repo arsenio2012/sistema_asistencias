@@ -1,3 +1,3 @@
 <div class="ui center aligned segment"> 
-	<h4 class="ui header"><?php echo $titulo." ".$version; ?> © 2023</h4>
+	<h4 class="ui header"><?php echo $titulo; ?> - Derechos reservados del autor © 2023 - Yohendri Toloza y Gloria Madrid</h4>
 </div>

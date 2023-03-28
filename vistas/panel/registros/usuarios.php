@@ -16,7 +16,10 @@
           <tr>
             <td class="collapsing">
               <div class="ui fitted slider checkbox">
-                <input type="checkbox" class="checkbox_ci" data-CiUser="<?php echo $usuario['id_user']; ?>"><label></label>
+                <?php if ($id_user == $usuario['id_user']): ?>
+                  <?php else: ?>
+                    <input type="checkbox" class="checkbox_ci" data-CiUser="<?php echo $usuario['id_user']; ?>"><label></label>
+                <?php endif ?>
               </div>
             </td>
             <td><?php echo $usuario['nombres'];?> <?php echo $usuario['apellidos'];?></td>
@@ -54,8 +57,11 @@
               <a href="#" class="ui primary button" id="ver_usuario">Ver</a>
               <div class="or"></div>
               <a href="#" class="ui positive button" id="editar_usuario">Editar</a>
-              <div class="or"></div>
-              <a href="#" class="ui negative button" id="eliminar_usuario">Eliminar</a>
+              <?php if (!isset($boton_eliminar)): ?>
+                <div class="or"></div>
+                <a href="#" class="ui negative button" id="eliminar_usuario">Eliminar</a>
+              <?php endif ?>
+              
             </div>
         </th>
        <!--<th><input type="text" id="all-products"></th>-->
